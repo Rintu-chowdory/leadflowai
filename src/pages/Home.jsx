@@ -83,15 +83,58 @@ export default function Home() {
       <section id="how-it-works" className="py-20 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">How LeadFlowAI Works</h2>
-            <p className="text-gray-400 text-lg">Four simple steps to transform your lead generation</p>
+            <div className="inline-block text-xs font-semibold text-indigo-400 uppercase tracking-widest border border-indigo-500/30 rounded-full px-4 py-1 mb-4">HOW IT WORKS</div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">Four Steps to</h2>
+            <p className="text-gray-400 text-lg max-w-xl mx-auto">Our AI-powered platform streamlines your entire lead generation process, from discovery to conversion.</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {steps.map((step) => (
-              <div key={step.num} className="card">
-                <div className="text-4xl font-bold gradient-text mb-4">{step.num}</div>
-                <h3 className="text-lg font-semibold mb-2">{step.title}</h3>
-                <p className="text-gray-400 text-sm">{step.desc}</p>
+          <div className="space-y-16">
+            {steps.map((step, i) => (
+              <div key={step.num} className={`flex flex-col ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} items-center gap-8 md:gap-16`}>
+                {/* Text side */}
+                <div className="flex-1 w-full">
+                  <div className="flex items-center gap-4 mb-4">
+                    <span className="text-5xl font-bold text-white/10">{step.num}</span>
+                    <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+                      {['🔍','⭐','✉️','📊'][i]}
+                    </div>
+                  </div>
+                  <h3 className="text-2xl font-bold mb-3">{step.title}</h3>
+                  <p className="text-gray-400 leading-relaxed mb-4">{step.desc}</p>
+                  <button className="text-indigo-400 hover:text-indigo-300 text-sm font-medium flex items-center gap-2 transition-colors">
+                    Learn more
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </button>
+                </div>
+                {/* Image/Chart side */}
+                <div className="flex-1 w-full">
+                  <div className="rounded-2xl border border-white/10 bg-[#0f0f1a] overflow-hidden shadow-2xl">
+                    <div className="flex items-center gap-2 px-4 py-3 border-b border-white/5">
+                      <div className="w-3 h-3 rounded-full bg-red-500/60" />
+                      <div className="w-3 h-3 rounded-full bg-yellow-500/60" />
+                      <div className="w-3 h-3 rounded-full bg-green-500/60" />
+                      <span className="ml-2 text-xs text-gray-500">dashboard.leadflowai.com</span>
+                    </div>
+                    <div className="p-6">
+                      <div className="text-xs text-gray-500 mb-3">USERS · LAST 7 DAYS USING MEDIAN ▼</div>
+                      {/* Mock chart */}
+                      <div className="flex items-end gap-1 h-24 mb-4">
+                        {[30,50,40,70,55,80,65,90,75,85,60,95,70,88,72].map((h, idx) => (
+                          <div key={idx} className="flex-1 rounded-sm" style={{ height: `${h}%`, background: idx > 9 ? 'rgba(99,102,241,0.7)' : 'rgba(99,102,241,0.25)' }} />
+                        ))}
+                      </div>
+                      <div className="grid grid-cols-3 gap-3">
+                        {[['0.7s','Load Time'],['2.7Mpvs','Revenue Limit'],['40.6%','Bounce Rate']].map(([val,label]) => (
+                          <div key={label} className="bg-white/5 rounded-lg p-2 text-center">
+                            <div className="text-sm font-bold text-white">{val}</div>
+                            <div className="text-xs text-gray-500">{label}</div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
