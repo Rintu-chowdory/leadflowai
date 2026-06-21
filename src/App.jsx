@@ -6,6 +6,7 @@ import AILeadFinder from './pages/AILeadFinder'
 import CRMIntegrations from './pages/CRMIntegrations'
 import Pricing from './pages/Pricing'
 import GetStarted from './pages/GetStarted'
+import Datenschutz from './pages/Datenschutz'
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
           <Route path="/crm-integrations" element={<CRMIntegrations />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/get-started" element={<GetStarted />} />
+          <Route path="/datenschutz" element={<Datenschutz />} />
         </Routes>
       </main>
       <Footer />
