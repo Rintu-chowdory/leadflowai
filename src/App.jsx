@@ -7,6 +7,7 @@ import CRMIntegrations from './pages/CRMIntegrations'
 import Pricing from './pages/Pricing'
 import GetStarted from './pages/GetStarted'
 import Datenschutz from './pages/Datenschutz'
+import Impressum from './pages/Impressum'
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/get-started" element={<GetStarted />} />
           <Route path="/datenschutz" element={<Datenschutz />} />
+          <Route path="/impressum" element={<Impressum />} />
         </Routes>
       </main>
       <Footer />
