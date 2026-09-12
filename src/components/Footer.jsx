@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom'
 
+const homeAnchor = hash => `${import.meta.env.BASE_URL}${hash}`
+
 export default function Footer() {
   return (
     <footer className="border-t border-white/5 py-12 mt-20">
@@ -20,9 +22,9 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold mb-3 text-sm uppercase tracking-wider text-gray-300">Company</h4>
             <ul className="space-y-2 text-gray-400 text-sm">
-              <li><a href="#" className="hover:text-white transition-colors">About</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Blog</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
+              <li><a href={homeAnchor('#features')} className="hover:text-white transition-colors">About</a></li>
+              <li><a href={homeAnchor('#testimonials')} className="hover:text-white transition-colors">Why LeadFlowAI</a></li>
+              <li><a href={homeAnchor('#faq')} className="hover:text-white transition-colors">FAQ</a></li>
             </ul>
           </div>
           <div>
@@ -30,9 +32,7 @@ export default function Footer() {
             <ul className="space-y-2 text-gray-400 text-sm">
               <li><Link to="/datenschutz" className="hover:text-white transition-colors">Datenschutz</Link></li>
               <li><Link to="/impressum" className="hover:text-white transition-colors">Impressum</Link></li>
-              <li><a href="#" className="hover:text-white transition-colors">Privacy</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Terms</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">GDPR</a></li>
+
             </ul>
           </div>
         </div>

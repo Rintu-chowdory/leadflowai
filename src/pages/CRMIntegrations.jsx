@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 const integrations = [
   { name: 'Salesforce', icon: '☁️', desc: 'Sync leads, contacts, and opportunities bidirectionally.', category: 'CRM' },
   { name: 'HubSpot', icon: '🟠', desc: 'Automatic lead import, deal creation, and pipeline sync.', category: 'CRM' },
@@ -12,6 +14,8 @@ const integrations = [
 ]
 
 export default function CRMIntegrations() {
+  const [connected, setConnected] = useState([])
+  const toggle = name => setConnected(c => c.includes(name) ? c.filter(n => n !== name) : [...c, name])
   return (
     <div className="pt-24 pb-16 px-4">
       <div className="max-w-7xl mx-auto">
@@ -29,7 +33,7 @@ export default function CRMIntegrations() {
                   <span className="text-xs bg-white/10 px-2 py-0.5 rounded-full text-gray-400">{integ.category}</span>
                 </div>
                 <p className="text-gray-400 text-sm">{integ.desc}</p>
-                <button className="text-indigo-400 text-sm mt-2 hover:text-indigo-300">Connect →</button>
+                <button onClick={() => toggle(integ.name)} className={connected.includes(integ.name) ? 'text-green-400 text-sm mt-2' : 'text-indigo-400 text-sm mt-2 hover:text-indigo-300'}>{connected.includes(integ.name) ? 'Connected ✓ (demo)' : 'Connect →'}</button>
               </div>
             </div>
           ))}

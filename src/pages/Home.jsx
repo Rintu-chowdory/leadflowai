@@ -100,12 +100,12 @@ export default function Home() {
                   </div>
                   <h3 className="text-2xl font-bold mb-3">{step.title}</h3>
                   <p className="text-gray-400 leading-relaxed mb-4">{step.desc}</p>
-                  <button className="text-indigo-400 hover:text-indigo-300 text-sm font-medium flex items-center gap-2 transition-colors">
+                  <Link to="/ai-lead-finder" className="text-indigo-400 hover:text-indigo-300 text-sm font-medium flex items-center gap-2 transition-colors">
                     Learn more
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                     </svg>
-                  </button>
+                  </Link>
                 </div>
                 {/* Image/Chart side */}
                 <div className="flex-1 w-full">

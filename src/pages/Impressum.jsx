@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 export default function Impressum() {
   return (
     <div className="min-h-screen bg-black/95 py-20 px-4 sm:px-6 lg:px-8">
@@ -110,7 +112,7 @@ export default function Impressum() {
               Datenschutz
             </h2>
             <p className="text-gray-400">
-              Informationen zum Datenschutz finden Sie in unserer <a href="/datenschutz" className="text-purple-400 hover:text-purple-300 transition-colors">Datenschutzerklärung</a>.
+              Informationen zum Datenschutz finden Sie in unserer <Link to="/datenschutz" className="text-purple-400 hover:text-purple-300 transition-colors">Datenschutzerklärung</Link>.
             </p>
           </section>
         </div>
