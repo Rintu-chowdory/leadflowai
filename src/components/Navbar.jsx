@@ -25,7 +25,7 @@ export default function Navbar() {
                 </svg>
               </button>
               {productOpen && (
-                <div className="absolute top-full left-0 mt-2 w-48 bg-[#0f0f1a] border border-white/10 rounded-lg shadow-xl py-2">
+                <div className="absolute top-full right-0 mt-2 w-48 bg-[#0f0f1a] border border-white/10 rounded-lg shadow-xl py-2">
                   <Link to="/ai-lead-finder" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-white/5">AI Lead Finder</Link>
                   <Link to="/crm-integrations" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-white/5">CRM Integrations</Link>
                 </div>
