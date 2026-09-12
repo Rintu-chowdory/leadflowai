@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 
 const plans = [
   {
@@ -32,7 +33,9 @@ const plans = [
 ]
 
 export default function Pricing() {
+  const { user } = useAuth()
   const [yearly, setYearly] = useState(false)
+  const [selected, setSelected] = useState(null)
 
   return (
     <div className="pt-24 pb-16 px-4">
@@ -65,10 +68,18 @@ export default function Pricing() {
                 <span className="text-4xl font-bold">${yearly ? plan.yearlyPrice : plan.monthlyPrice}</span>
                 <span className="text-gray-400">/mo</span>
               </div>
-              <Link to="/get-started"
-                className={`block text-center mb-6 ${plan.highlight ? 'btn-primary' : 'btn-secondary'}`}>
-                {plan.cta}
-              </Link>
+              {user ? (
+                <button
+                  onClick={() => setSelected(plan.name)}
+                  className={`block w-full text-center mb-6 ${plan.highlight ? 'btn-primary' : 'btn-secondary'}`}>
+                  {selected === plan.name ? 'Selected ✓' : `Choose ${plan.name}`}
+                </button>
+              ) : (
+                <Link to="/get-started"
+                  className={`block text-center mb-6 ${plan.highlight ? 'btn-primary' : 'btn-secondary'}`}>
+                  {plan.cta}
+                </Link>
+              )}
               <ul className="space-y-2">
                 {plan.features.map(f => (
                   <li key={f} className="flex items-center gap-2 text-sm text-gray-300">
@@ -79,6 +90,11 @@ export default function Pricing() {
             </div>
           ))}
         </div>
+        {user && selected && (
+          <p className="text-center text-gray-400 text-sm mt-8">
+            You're set on the <span className="text-indigo-400">{selected}</span> plan (demo mode — no billing yet).
+          </p>
+        )}
       </div>
     </div>
   )

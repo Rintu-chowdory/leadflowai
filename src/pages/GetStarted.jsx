@@ -1,8 +1,11 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import OAuthButtons from '../components/OAuthButtons'
+import { useAuth } from '../context/AuthContext'
 
 export default function GetStarted() {
+  const { login } = useAuth()
+  const navigate = useNavigate()
   const [form, setForm] = useState({ name: '', email: '', company: '', password: '' })
   const [submitted, setSubmitted] = useState(false)
   const [social, setSocial] = useState(null)
@@ -34,6 +37,7 @@ export default function GetStarted() {
     setLoading(true)
     setTimeout(() => {
       setLoading(false)
+      login({ name: form.name, email: form.email, company: form.company, method: 'email' })
       setSubmitted(true)
     }, 1500)
   }
@@ -51,9 +55,10 @@ export default function GetStarted() {
             <h2 className="text-2xl font-bold mb-3">You're all set{social ? '' : `, ${form.name.split(' ')[0]}`}! 🎉</h2>
             <p className="text-gray-400 mb-2">Account created for <span className="text-indigo-400">{social ? social.email : form.email}</span>{social ? ` via ${social.label}` : ''}</p>
             <p className="text-gray-500 text-sm mb-8">Your 14-day free trial has started. No credit card required.</p>
+            <p className="text-gray-500 text-sm mb-4">Demo mode — check the top-right menu, you're signed in.</p>
             <div className="space-y-3">
-              <Link to="/" className="btn-primary block text-center">Go to Dashboard →</Link>
-              <Link to="/" className="text-sm text-gray-400 hover:text-white transition-colors block">Back to Home</Link>
+              <button onClick={() => navigate('/')} className="btn-primary block w-full text-center">Go to Dashboard →</button>
+              <button onClick={() => navigate('/')} className="text-sm text-gray-400 hover:text-white transition-colors block w-full text-center">Back to Home</button>
             </div>
           </div>
         </div>
@@ -71,7 +76,7 @@ export default function GetStarted() {
         </div>
         <div className="card">
           <div className="mb-6">
-            <OAuthButtons onSuccess={p => setSocial({ label: p.label, email: `${p.id}-user@company.com` })} columns={2} />
+            <OAuthButtons onSuccess={p => { const email = `${p.id}-user@company.com`; login({ name: p.label + ' user', email, method: p.label }); setSocial({ label: p.label, email }) }} columns={2} />
           </div>
           <div className="flex items-center gap-3 mb-6">
             <div className="flex-1 h-px bg-white/10" />

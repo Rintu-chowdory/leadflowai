@@ -1,11 +1,24 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
+import { useAuth } from '../context/AuthContext'
 
 const homeAnchor = hash => `${import.meta.env.BASE_URL}${hash}`
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
   const [productOpen, setProductOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const { user, logout } = useAuth()
+  const navigate = useNavigate()
+
+  const initials = user ? (user.name || user.email || '?').trim().charAt(0).toUpperCase() : ''
+
+  const handleLogout = () => {
+    logout()
+    setMenuOpen(false)
+    setOpen(false)
+    navigate('/')
+  }
 
   return (
     <nav className="fixed top-0 w-full z-50 bg-[#0a0a0f]/90 backdrop-blur border-b border-white/5">
@@ -40,18 +53,35 @@ export default function Navbar() {
 
           {/* Desktop Right */}
           <div className="hidden md:flex items-center gap-3">
-            <Link to="/login" className="flex items-center gap-2 text-gray-300 hover:text-white transition-colors text-sm">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
-              </svg>
-              Login
-            </Link>
-            <Link to="/get-started" className="btn-primary text-sm flex items-center gap-2">
-              Get Started Free
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </Link>
+            {user ? (
+              <div className="relative" onMouseEnter={() => setMenuOpen(true)} onMouseLeave={() => setMenuOpen(false)}>
+                <button type="button" className="flex items-center gap-2 text-gray-300 hover:text-white transition-colors text-sm">
+                  <span className="w-7 h-7 rounded-full bg-indigo-600 flex items-center justify-center text-white text-xs font-semibold">{initials}</span>
+                  {user.name || user.email}
+                </button>
+                {menuOpen && (
+                  <div className="absolute top-full right-0 mt-2 w-52 bg-[#0f0f1a] border border-white/10 rounded-lg shadow-xl py-2">
+                    <div className="px-4 py-2 text-xs text-gray-500 border-b border-white/5 mb-1">Signed in via {user.method || 'email'} &middot; demo mode</div>
+                    <button onClick={handleLogout} className="w-full text-left px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-white/5">Log out</button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <>
+                <Link to="/login" className="flex items-center gap-2 text-gray-300 hover:text-white transition-colors text-sm">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                  </svg>
+                  Login
+                </Link>
+                <Link to="/get-started" className="btn-primary text-sm flex items-center gap-2">
+                  Get Started Free
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile hamburger */}
@@ -76,8 +106,17 @@ export default function Navbar() {
             <a href={homeAnchor('#features')} onClick={() => setOpen(false)} className="block text-gray-300 hover:text-white py-2 px-2 rounded hover:bg-white/5">About</a>
             <a href={homeAnchor('#contact')} onClick={() => setOpen(false)} className="block text-gray-300 hover:text-white py-2 px-2 rounded hover:bg-white/5">Contact</a>
             <div className="pt-3 space-y-2">
-              <Link to="/login" onClick={() => setOpen(false)} className="block text-center text-gray-300 border border-white/20 rounded-lg py-2 hover:border-white/40">Login</Link>
-              <Link to="/get-started" onClick={() => setOpen(false)} className="btn-primary block text-center">Get Started Free →</Link>
+              {user ? (
+                <>
+                  <div className="text-center text-sm text-gray-400 py-1">Signed in as {user.name || user.email}</div>
+                  <button onClick={handleLogout} className="block w-full text-center text-gray-300 border border-white/20 rounded-lg py-2 hover:border-white/40">Log out</button>
+                </>
+              ) : (
+                <>
+                  <Link to="/login" onClick={() => setOpen(false)} className="block text-center text-gray-300 border border-white/20 rounded-lg py-2 hover:border-white/40">Login</Link>
+                  <Link to="/get-started" onClick={() => setOpen(false)} className="btn-primary block text-center">Get Started Free →</Link>
+                </>
+              )}
             </div>
           </div>
         )}
