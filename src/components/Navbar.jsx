@@ -1,5 +1,5 @@
-import { Link, useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
+import { useState, useEffect, useRef } from 'react'
 import { useAuth } from '../context/AuthContext'
 
 const homeAnchor = hash => `${import.meta.env.BASE_URL}${hash}`
@@ -10,6 +10,27 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const { user, logout } = useAuth()
   const navigate = useNavigate()
+  const location = useLocation()
+  const navRef = useRef(null)
+
+  // Close all menus whenever the route changes
+  useEffect(() => {
+    setProductOpen(false)
+    setMenuOpen(false)
+    setOpen(false)
+  }, [location])
+
+  // Close dropdowns on click outside the navbar
+  useEffect(() => {
+    const onDoc = e => {
+      if (navRef.current && !navRef.current.contains(e.target)) {
+        setProductOpen(false)
+        setMenuOpen(false)
+      }
+    }
+    document.addEventListener('click', onDoc)
+    return () => document.removeEventListener('click', onDoc)
+  }, [])
 
   const initials = user ? (user.name || user.email || '?').trim().charAt(0).toUpperCase() : ''
 
@@ -21,7 +42,7 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="fixed top-0 w-full z-50 bg-[#0a0a0f]/90 backdrop-blur border-b border-white/5">
+    <nav className="fixed top-0 w-full z-50 bg-[#0a0a0f]/90 backdrop-blur border-b border-white/5" ref={navRef}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
@@ -29,18 +50,28 @@ export default function Navbar() {
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center space-x-6">
-            {/* Product dropdown */}
-            <div className="relative" onMouseEnter={() => setProductOpen(true)} onMouseLeave={() => setProductOpen(false)}>
-              <button type="button" className="appearance-none bg-transparent border-0 p-0 m-0 flex items-center gap-1 text-gray-400 hover:text-white transition-colors text-sm focus:outline-none">
+            {/* Product dropdown — opens on hover AND click */}
+            <div
+              className="relative"
+              onMouseEnter={() => setProductOpen(true)}
+              onMouseLeave={() => setProductOpen(false)}
+            >
+              <button
+                type="button"
+                onClick={() => setProductOpen(v => !v)}
+                className="appearance-none bg-transparent border-0 p-0 m-0 flex items-center gap-1 text-gray-400 hover:text-white transition-colors text-sm focus:outline-none"
+              >
                 Product
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
               {productOpen && (
-                <div className="absolute top-full left-0 mt-2 w-48 bg-[#0f0f1a] border border-white/10 rounded-lg shadow-xl py-2">
-                  <Link to="/ai-lead-finder" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-white/5">AI Lead Finder</Link>
-                  <Link to="/crm-integrations" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-white/5">CRM Integrations</Link>
+                <div className="absolute top-full left-0 pt-2 w-48">
+                  <div className="bg-[#0f0f1a] border border-white/10 rounded-lg shadow-xl py-2">
+                    <Link to="/ai-lead-finder" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-white/5">AI Lead Finder</Link>
+                    <Link to="/crm-integrations" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-white/5">CRM Integrations</Link>
+                  </div>
                 </div>
               )}
             </div>
@@ -54,15 +85,28 @@ export default function Navbar() {
           {/* Desktop Right */}
           <div className="hidden md:flex items-center gap-3">
             {user ? (
-              <div className="relative" onMouseEnter={() => setMenuOpen(true)} onMouseLeave={() => setMenuOpen(false)}>
-                <button type="button" className="flex items-center gap-2 text-gray-300 hover:text-white transition-colors text-sm">
+              <div
+                className="relative"
+                onMouseEnter={() => setMenuOpen(true)}
+                onMouseLeave={() => setMenuOpen(false)}
+              >
+                <button
+                  type="button"
+                  onClick={() => setMenuOpen(v => !v)}
+                  className="flex items-center gap-2 text-gray-300 hover:text-white transition-colors text-sm"
+                >
                   <span className="w-7 h-7 rounded-full bg-indigo-600 flex items-center justify-center text-white text-xs font-semibold">{initials}</span>
                   {user.name || user.email}
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
                 </button>
                 {menuOpen && (
-                  <div className="absolute top-full right-0 mt-2 w-52 bg-[#0f0f1a] border border-white/10 rounded-lg shadow-xl py-2">
-                    <div className="px-4 py-2 text-xs text-gray-500 border-b border-white/5 mb-1">Signed in via {user.method || 'email'} &middot; demo mode</div>
-                    <button onClick={handleLogout} className="w-full text-left px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-white/5">Log out</button>
+                  <div className="absolute top-full right-0 pt-2 w-52">
+                    <div className="bg-[#0f0f1a] border border-white/10 rounded-lg shadow-xl py-2">
+                      <div className="px-4 py-2 text-xs text-gray-500 border-b border-white/5 mb-1">Signed in via {user.method || 'email'} &middot; demo mode</div>
+                      <button onClick={handleLogout} className="w-full text-left px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-white/5">Log out</button>
+                    </div>
                   </div>
                 )}
               </div>
