@@ -18,14 +18,14 @@ export default function Navbar() {
           <div className="hidden md:flex items-center space-x-6">
             {/* Product dropdown */}
             <div className="relative" onMouseEnter={() => setProductOpen(true)} onMouseLeave={() => setProductOpen(false)}>
-              <button className="flex items-center gap-1 text-gray-400 hover:text-white transition-colors text-sm">
+              <button type="button" className="appearance-none bg-transparent border-0 p-0 m-0 flex items-center gap-1 text-gray-400 hover:text-white transition-colors text-sm focus:outline-none">
                 Product
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
               {productOpen && (
-                <div className="absolute top-full right-0 mt-2 w-48 bg-[#0f0f1a] border border-white/10 rounded-lg shadow-xl py-2">
+                <div className="absolute top-full left-0 mt-2 w-48 bg-[#0f0f1a] border border-white/10 rounded-lg shadow-xl py-2">
                   <Link to="/ai-lead-finder" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-white/5">AI Lead Finder</Link>
                   <Link to="/crm-integrations" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-white/5">CRM Integrations</Link>
                 </div>
