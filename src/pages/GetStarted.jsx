@@ -70,7 +70,7 @@ export default function GetStarted() {
         </div>
         <div className="card">
           <div className="mb-6">
-            <OAuthButtons onSuccess={p => alert(`Google/${p.label} OAuth — coming soon!`)} columns={2} />
+            <OAuthButtons onSuccess={p => alert(`${p.label} OAuth — coming soon!`)} columns={2} />
           </div>
           <div className="flex items-center gap-3 mb-6">
             <div className="flex-1 h-px bg-white/10" />
