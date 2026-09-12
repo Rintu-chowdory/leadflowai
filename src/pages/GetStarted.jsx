@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import OAuthButtons from '../components/OAuthButtons'
 
 export default function GetStarted() {
   const [form, setForm] = useState({ name: '', email: '', company: '', password: '' })
@@ -68,21 +69,8 @@ export default function GetStarted() {
           <p className="text-gray-400">No credit card required · 14-day free trial</p>
         </div>
         <div className="card">
-          <div className="grid grid-cols-2 gap-3 mb-6">
-            <button
-              type="button"
-              onClick={() => alert('Google OAuth — coming soon!')}
-              className="btn-secondary py-2 text-sm flex items-center justify-center gap-2 w-full"
-            >
-              🔵 Google
-            </button>
-            <button
-              type="button"
-              onClick={() => alert('LinkedIn OAuth — coming soon!')}
-              className="btn-secondary py-2 text-sm flex items-center justify-center gap-2 w-full"
-            >
-              💼 LinkedIn
-            </button>
+          <div className="mb-6">
+            <OAuthButtons onSuccess={p => alert(`Google/${p.label} OAuth — coming soon!`)} columns={2} />
           </div>
           <div className="flex items-center gap-3 mb-6">
             <div className="flex-1 h-px bg-white/10" />
@@ -133,7 +121,7 @@ export default function GetStarted() {
           </form>
           <p className="text-center text-sm text-gray-400 mt-4">
             Already have an account?{' '}
-            <Link to="/get-started" className="text-indigo-400 hover:underline">Sign in</Link>
+            <Link to="/login" className="text-indigo-400 hover:underline">Sign in</Link>
           </p>
         </div>
       </div>

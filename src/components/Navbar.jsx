@@ -38,7 +38,7 @@ export default function Navbar() {
 
           {/* Desktop Right */}
           <div className="hidden md:flex items-center gap-3">
-            <Link to="/get-started" className="flex items-center gap-2 text-gray-300 hover:text-white transition-colors text-sm">
+            <Link to="/login" className="flex items-center gap-2 text-gray-300 hover:text-white transition-colors text-sm">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
               </svg>
@@ -74,7 +74,7 @@ export default function Navbar() {
             <a href="#features" onClick={() => setOpen(false)} className="block text-gray-300 hover:text-white py-2 px-2 rounded hover:bg-white/5">About</a>
             <a href="#contact" onClick={() => setOpen(false)} className="block text-gray-300 hover:text-white py-2 px-2 rounded hover:bg-white/5">Contact</a>
             <div className="pt-3 space-y-2">
-              <Link to="/get-started" onClick={() => setOpen(false)} className="block text-center text-gray-300 border border-white/20 rounded-lg py-2 hover:border-white/40">Login</Link>
+              <Link to="/login" onClick={() => setOpen(false)} className="block text-center text-gray-300 border border-white/20 rounded-lg py-2 hover:border-white/40">Login</Link>
               <Link to="/get-started" onClick={() => setOpen(false)} className="btn-primary block text-center">Get Started Free →</Link>
             </div>
           </div>
