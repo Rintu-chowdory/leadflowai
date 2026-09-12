@@ -5,6 +5,7 @@ import OAuthButtons from '../components/OAuthButtons'
 export default function GetStarted() {
   const [form, setForm] = useState({ name: '', email: '', company: '', password: '' })
   const [submitted, setSubmitted] = useState(false)
+  const [social, setSocial] = useState(null)
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState({})
 
@@ -37,7 +38,7 @@ export default function GetStarted() {
     }, 1500)
   }
 
-  if (submitted) {
+  if (submitted || social) {
     return (
       <div className="pt-24 pb-16 px-4 min-h-screen flex items-center">
         <div className="max-w-md mx-auto w-full text-center">
@@ -47,8 +48,8 @@ export default function GetStarted() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <h2 className="text-2xl font-bold mb-3">You're all set, {form.name.split(' ')[0]}! 🎉</h2>
-            <p className="text-gray-400 mb-2">Account created for <span className="text-indigo-400">{form.email}</span></p>
+            <h2 className="text-2xl font-bold mb-3">You're all set{social ? '' : `, ${form.name.split(' ')[0]}`}! 🎉</h2>
+            <p className="text-gray-400 mb-2">Account created for <span className="text-indigo-400">{social ? social.email : form.email}</span>{social ? ` via ${social.label}` : ''}</p>
             <p className="text-gray-500 text-sm mb-8">Your 14-day free trial has started. No credit card required.</p>
             <div className="space-y-3">
               <Link to="/" className="btn-primary block text-center">Go to Dashboard →</Link>
@@ -70,7 +71,7 @@ export default function GetStarted() {
         </div>
         <div className="card">
           <div className="mb-6">
-            <OAuthButtons onSuccess={p => alert(`${p.label} OAuth — coming soon!`)} columns={2} />
+            <OAuthButtons onSuccess={p => setSocial({ label: p.label, email: `${p.id}-user@company.com` })} columns={2} />
           </div>
           <div className="flex items-center gap-3 mb-6">
             <div className="flex-1 h-px bg-white/10" />

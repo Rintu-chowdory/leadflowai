@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
 
+const homeAnchor = hash => `${import.meta.env.BASE_URL}${hash}`
+
 export default function Navbar() {
   const [open, setOpen] = useState(false)
   const [productOpen, setProductOpen] = useState(false)
@@ -30,10 +32,10 @@ export default function Navbar() {
               )}
             </div>
             <Link to="/pricing" className="text-gray-400 hover:text-white transition-colors text-sm">Pricing</Link>
-            <a href="#testimonials" className="text-gray-400 hover:text-white transition-colors text-sm">Testimonials</a>
-            <a href="#faq" className="text-gray-400 hover:text-white transition-colors text-sm">FAQ</a>
-            <a href="#features" className="text-gray-400 hover:text-white transition-colors text-sm">About</a>
-            <a href="#contact" className="text-gray-400 hover:text-white transition-colors text-sm">Contact</a>
+            <a href={homeAnchor('#testimonials')} className="text-gray-400 hover:text-white transition-colors text-sm">Testimonials</a>
+            <a href={homeAnchor('#faq')} className="text-gray-400 hover:text-white transition-colors text-sm">FAQ</a>
+            <a href={homeAnchor('#features')} className="text-gray-400 hover:text-white transition-colors text-sm">About</a>
+            <a href={homeAnchor('#contact')} className="text-gray-400 hover:text-white transition-colors text-sm">Contact</a>
           </div>
 
           {/* Desktop Right */}
@@ -69,10 +71,10 @@ export default function Navbar() {
               <Link to="/crm-integrations" onClick={() => setOpen(false)} className="block text-gray-300 hover:text-white py-2 px-2 rounded hover:bg-white/5">CRM Integrations</Link>
             </div>
             <Link to="/pricing" onClick={() => setOpen(false)} className="block text-gray-300 hover:text-white py-2 px-2 rounded hover:bg-white/5">Pricing</Link>
-            <a href="#testimonials" onClick={() => setOpen(false)} className="block text-gray-300 hover:text-white py-2 px-2 rounded hover:bg-white/5">Testimonials</a>
-            <a href="#faq" onClick={() => setOpen(false)} className="block text-gray-300 hover:text-white py-2 px-2 rounded hover:bg-white/5">FAQ</a>
-            <a href="#features" onClick={() => setOpen(false)} className="block text-gray-300 hover:text-white py-2 px-2 rounded hover:bg-white/5">About</a>
-            <a href="#contact" onClick={() => setOpen(false)} className="block text-gray-300 hover:text-white py-2 px-2 rounded hover:bg-white/5">Contact</a>
+            <a href={homeAnchor('#testimonials')} onClick={() => setOpen(false)} className="block text-gray-300 hover:text-white py-2 px-2 rounded hover:bg-white/5">Testimonials</a>
+            <a href={homeAnchor('#faq')} onClick={() => setOpen(false)} className="block text-gray-300 hover:text-white py-2 px-2 rounded hover:bg-white/5">FAQ</a>
+            <a href={homeAnchor('#features')} onClick={() => setOpen(false)} className="block text-gray-300 hover:text-white py-2 px-2 rounded hover:bg-white/5">About</a>
+            <a href={homeAnchor('#contact')} onClick={() => setOpen(false)} className="block text-gray-300 hover:text-white py-2 px-2 rounded hover:bg-white/5">Contact</a>
             <div className="pt-3 space-y-2">
               <Link to="/login" onClick={() => setOpen(false)} className="block text-center text-gray-300 border border-white/20 rounded-lg py-2 hover:border-white/40">Login</Link>
               <Link to="/get-started" onClick={() => setOpen(false)} className="btn-primary block text-center">Get Started Free →</Link>
